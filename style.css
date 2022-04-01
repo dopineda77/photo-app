@@ -1,0 +1,23 @@
+#navbar {
+    display: flex;
+    flex-direction: row;
+}
+
+#app_name {
+    width: 75%;
+}
+
+#right_side {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 50%;
+}
+
+#user_name {
+    padding-right: 15%;
+}
+
+body{
+    background-color: lightgrey;
+}
