@@ -2,20 +2,317 @@
 <html lang="en" >
 <head>
     <meta charset="UTF-8">
-    <title>HTML Box Model</title>
-    <link rel="stylesheet" href="style.css"> 
+    <title>Photo App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+
 </head>
 <body>
     <div id="navbar">
-        <div id="app_name">
+        <p id="app-name">
             Photo App
-        </div>
-        <div id="right_side">
-            <div id="username">
-                username123
-            </div>
-            <div id ="signout">
+        </p>
+        <div id="inner-right">
+            <p id="user-name-z">
+                miklo
+            </p>
+            <a id="sign-out" href="#">
                 Sign out
+            </a>
+        </div>
+    </div>
+    <div id="outer-box">
+        <div class="content-box" id="left-side">
+            <div id="stories-nav">
+                <div id = "account-following">
+                    <img src="https://picsum.photos/id/237/50/50" alt="pic1" />
+                    <div id = "other-account">
+                        username5
+                    </div>
+                </div>
+                <div id = "account-following">
+                    <img src="https://picsum.photos/id/69/50/50" alt="pic1" />
+                    <div id = "other-account">
+                        username5
+                    </div>
+                </div>
+                <div id = "account-following">
+                    <img src="https://picsum.photos/id/53/50/50" alt="pic1" />
+                    <div id = "other-account">
+                        username5
+                    </div>
+                </div>
+                <div id = "account-following">
+                    <img src="https://picsum.photos/id/29/50/50" alt="pic1" />
+                    <div id = "other-account">
+                        username5
+                    </div>
+                </div>
+                <div id = "account-following">
+                    <img src="https://picsum.photos/id/76/50/50" alt="pic1" />
+                    <div id = "other-account">
+                        username5
+                    </div>
+                </div>
+            </div>
+            <div class="post">
+                <div id="post-nav">
+                    <p id="user-name">
+                        username123
+                    </p>
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+                <img src=https://www.acouplecooks.com/wp-content/uploads/2019/03/Coffee-Chemex-014.jpg>
+                <div id="post-interaction">
+                    <div id="like-share">
+                        <i class="far fa-2x fa-heart"></i>
+                        <i class="far fa-2x fa-comment"></i>
+                        <i class="far fa-2x fa-paper-plane"></i>
+                    </div>
+                    <div id="save">
+                        <i class="far fa-2x fa-bookmark"></i>
+                    </div>
+                </div>
+                <div id="num-likes">
+                    <p id="numbers">
+                        6,943 likes
+                    </p>
+                </div>
+                <div class="comment">
+                    <p>
+                        <a id="comment-user">
+                            username456
+                        </a>
+                        Lorem ipsum dolor sit amet consectetur 
+                        adipisicing elit.
+                    </p>
+                </div>
+                <div class="comment">
+                    <p>
+                        <a id="comment-user">
+                            username456
+                        </a>
+                        Lorem ipsum dolor sit amet consectetur 
+                        adipisicing elit.
+                    </p>
+                </div>
+                <div class="comment">
+                    <p>
+                        <a id="comment-user">
+                            username456
+                        </a>
+                        Lorem ipsum dolor sit amet consectetur 
+                        adipisicing elit.
+                    </p>
+                </div>
+                <div id="days-ago">
+                    <p>
+                        1 day ago
+                    </p>
+                </div>
+                <div id="comment-section">
+                    <div id="left-section">
+                        <i class="far fa-2x fa-smile"></i>
+                        <p id="words">Add a comment...</p>
+                    </div>
+                    <a id="post-button" href="#"> Post </a>
+                </div>
+            </div>
+            <div class="post">
+                <div id="post-nav">
+                    <p id="user-name">
+                        username123
+                    </p>
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+                <img src=https://i.pinimg.com/474x/03/53/3e/03533e3c45e0b997528cb17a3d9301be.jpg>
+                <div id="post-interaction">
+                    <div id="like-share">
+                        <i class="far fa-2x fa-heart"></i>
+                        <i class="far fa-2x fa-comment"></i>
+                        <i class="far fa-2x fa-paper-plane"></i>
+                    </div>
+                    <div id="save">
+                        <i class="far fa-2x fa-bookmark"></i>
+                    </div>
+                </div>
+                <div id="num-likes">
+                    <p id="numbers">
+                        964 likes
+                    </p>
+                </div>
+                <div class="comment">
+                    <p>
+                        <a id="comment-user">
+                            username456
+                        </a>
+                        Lorem ipsum dolor sit amet consectetur 
+                        adipisicing elit.
+                    </p>
+                </div>
+                <div class="comment">
+                    <p>
+                        <a id="comment-user">
+                            username456
+                        </a>
+                        Lorem ipsum dolor sit amet consectetur 
+                        adipisicing elit.
+                    </p>
+                </div>
+                <div class="comment">
+                    <p>
+                        <a id="comment-user">
+                            username456
+                        </a>
+                        Lorem ipsum dolor sit amet consectetur 
+                        adipisicing elit.
+                    </p>
+                </div>
+                <div id="days-ago">
+                    <p>
+                        1 day ago
+                    </p>
+                </div>
+                <div id="comment-section">
+                    <div id="left-section">
+                        <i class="far fa-2x fa-smile"></i>
+                        <p id="words">Add a comment...</p>
+                    </div>
+                    <a id="post-button" href="#"> Post </a>
+                </div>
+            </div>
+            <div class="post">
+                <div id="post-nav">
+                    <p id="user-name">
+                        username123
+                    </p>
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+                <img src=https://i.pinimg.com/474x/38/ff/73/38ff733bebe9799f77ae7232c06c4281.jpg>
+                <div id="post-interaction">
+                    <div id="like-share">
+                        <i class="far fa-2x fa-heart"></i>
+                        <i class="far fa-2x fa-comment"></i>
+                        <i class="far fa-2x fa-paper-plane"></i>
+                    </div>
+                    <div id="save">
+                        <i class="far fa-2x fa-bookmark"></i>
+                    </div>
+                </div>
+                <div id="num-likes">
+                    <p id="numbers">
+                        768 likes
+                    </p>
+                </div>
+                <div class="comment">
+                    <p>
+                        <a id="comment-user">
+                            username456
+                        </a>
+                        Lorem ipsum dolor sit amet consectetur 
+                        adipisicing elit.
+                    </p>
+                </div>
+                <div class="comment">
+                    <p>
+                        <a id="comment-user">
+                            username456
+                        </a>
+                        Lorem ipsum dolor sit amet consectetur 
+                        adipisicing elit.
+                    </p>
+                </div>
+                <div class="comment">
+                    <p>
+                        <a id="comment-user">
+                            username456
+                        </a>
+                        Lorem ipsum dolor sit amet consectetur 
+                        adipisicing elit.
+                    </p>
+                </div>
+                <div id="days-ago">
+                    <p>
+                        1 day ago
+                    </p>
+                </div>
+                <div id="comment-section">
+                    <div id="left-section">
+                        <i class="far fa-2x fa-smile"></i>
+                        <p id="words">Add a comment...</p>
+                    </div>
+                    <a id="post-button" href="#"> Post </a>
+                </div>
+            </div>
+        </div>
+        <div class="content-box" id="right-side">
+            <div id="user-info">
+                <img src="https://picsum.photos/id/866/50/50">
+                <p id="user-name">
+                    miklo
+                </p>
+            </div>
+            <p id="suggs">
+                Suggestions for you
+            </p>
+            <div id = "sugg-box">
+                <img src="https://picsum.photos/id/234/50/50" alt="pic1" />
+                <div id = "info">
+                    <div id = "other-username">
+                        username1
+                    </div>
+                    <div id = "suggested">
+                        suggested for you
+                    </div>
+                </div>
+                <a id = "follow1" href="#">
+                    follow
+                </a>
+            </div>
+            <div id = "sugg-box">
+                <img src="https://picsum.photos/id/360/50/50" alt="pic1" />
+                <div id = "info">
+                    <div id = "other-username">
+                        username2
+                    </div>
+                    <div id = "suggested">
+                        suggested for you
+                    </div>
+                </div>
+                <a id = "follow1" href="#">
+                    follow
+                </a>
+            </div>
+            <div id = "sugg-box">
+                <img src="https://picsum.photos/id/543/50/50" alt="pic1" />
+                <div id = "info">
+                    <div id = "other-username">
+                        username3
+                    </div>
+                    <div id = "suggested">
+                        suggested for you
+                    </div>
+                </div>
+                <a id = "follow1" href="#">
+                    follow
+                </a>
+            </div>
+            <div id = "sugg-box">
+                <img src="https://picsum.photos/id/156/50/50" alt="pic1" />
+                <div id = "info">
+                    <div id = "other-username">
+                        username4
+                    </div>
+                    <div id = "suggested">
+                        suggested for you
+                    </div>
+                </div>
+                <a id = "follow1" href="#">
+                    follow
+                </a>
             </div>
         </div>
     </div>
