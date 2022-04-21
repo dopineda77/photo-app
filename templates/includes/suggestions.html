@@ -1,0 +1,17 @@
+{% for i in range(suggestions|length) %}
+<div id = "sugg-box">
+    <img src="{{ suggestions[i].get('image_url') }}" alt="Suggested user {{i}}'s profile picture" width="50" height="50"/>
+    <div id = "info">
+        <div id = "other-username">
+            {{ suggestions[i].get('username') }}
+        </div>
+        <div id = "suggested">
+            suggested for you
+        </div>
+    </div>
+    <a id = "follow1" href="#">
+        follow
+    </a>
+</div>
+{%endfor%}
+    
