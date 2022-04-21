@@ -1,7 +1,0 @@
-I had to add alternative texts and change the color of certain text boxes and fix the contrast issues.
-
-I would say that most accessibility issues are solvable by the developer in the first place, so user content doesn't really play a factor in these issues.
-
-After removing the css, the webpage is not very pretty appealing to look at but everything still is generally usable. The different divs don't overlap and the buttons are still tabbable and easily differentiable.
-
-Since all images have alt text, it would still be usable.

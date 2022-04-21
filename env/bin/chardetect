@@ -1,4 +1,4 @@
-#!/Users/Danny/Desktop/spring22/cs396/hw02/env/bin/python3
+#!/Users/Danny/Desktop/spring22/cs396/photo-app/env/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
