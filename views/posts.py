@@ -26,9 +26,10 @@ class PostListEndpoint(Resource):
         if limit > 50:
             return Response(json.dumps("Limit is too high"), mimetype ="application/json", status=400)
         # posts = Post.query.limit(limit).all()
-        posts = Post.query.filter(Post.user_id.in_(user_ids)).limit(limit)
+        posts = Post.query.filter(Post.user_id.in_(user_ids))
         
-        posts_json = [post.to_dict() for post in posts]
+        posts = posts.order_by(Post.pub_date.desc()).limit(limit)
+        posts_json = [post.to_dict(user=self.current_user) for post in posts]
         return Response(json.dumps(posts_json), mimetype="application/json", status=200)
 
     def post(self): #HTTP POST
@@ -78,7 +79,7 @@ class PostDetailEndpoint(Resource):
 
         db.session.commit()
 
-        return Response(json.dumps(post.to_dict()), mimetype="application/json", status=200)
+        return Response(json.dumps(post.to_dict(user=self.current_user)), mimetype="application/json", status=200)
 
 
     def delete(self, id):

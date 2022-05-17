@@ -30,14 +30,22 @@ initialize_routes(api)
 
 # Server-side template for the homepage:
 @app.route('/')
+def lab7():
+    return render_template(
+        'starter-client.html', 
+        user=app.current_user
+    )
+
+@app.route('/lab7')
 def home():
-    return '''
-       <p>View <a href="/api">REST API Tester</a>.</p>
-       <p>Feel free to replace this code from HW2</p>
-    '''
+    return render_template(
+        'lab7.html', 
+        user=app.current_user
+    )
 
 
 @app.route('/api')
+@app.route('/api/')
 def api_docs():
     navigator = ApiNavigator(app.current_user)
     return render_template(

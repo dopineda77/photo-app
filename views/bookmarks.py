@@ -1,7 +1,7 @@
 from flask import Response, request
 from flask_restful import Resource
 from models import Bookmark, db
-from views import get_authorized_user_ids
+from views import get_authorized_user_ids, can_view_post
 import json
 
 class BookmarksListEndpoint(Resource):
@@ -42,8 +42,10 @@ class BookmarksListEndpoint(Resource):
         if post_id > 999:
             return Response(json.dumps({"message":"'post_id' is too big."}), mimetype="application/json", status=404)
 
-        if post_id not in current_users:
-            return Response(json.dumps({"message":"'post_id' is not accessible."}), mimetype="application/json", status=404)
+        if not can_view_post(post_id, self.current_user):
+            return Response(json.dumps({"message":"'user_id' is not viewable"}), mimetype="application/json", status=404)
+        # if post_id not in current_users:
+        #     return Response(json.dumps({"message":"'post_id' is not accessible."}), mimetype="application/json", status=404)
 
         # filters (gets rid of duplicates))
         bookmarks = Bookmark.query.filter_by(user_id = self.current_user.id).filter_by(post_id = body.get('post_id')).all()

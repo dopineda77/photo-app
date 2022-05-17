@@ -29,7 +29,7 @@ class FollowingListEndpoint(Resource):
         if not str(body.get('user_id')).isdigit():
             return Response(json.dumps({"message":"'user_id' is not a number."}), mimetype="application/json", status=400)
 
-        if body.get('user_id') > 999:
+        if int(body.get('user_id')) > 999:
             return Response(json.dumps({"message":"'user_id' is too big."}), mimetype="application/json", status=404)
 
         # filters 
