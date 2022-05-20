@@ -4,7 +4,7 @@ const userInfo2html = user => {
 };
 
 const displayProfile = () => {
-    fetch(`/api/profile/`)
+    fetch(`api/profile/`)
     .then(response => response.json())
     .then(data => {
         console.log(data);
@@ -119,7 +119,7 @@ const createFollower = (userId, elem) => {
         "user_id": userId
     };
     
-    fetch("http://127.0.0.1:5000/api/following/", {
+    fetch(`/api/following/`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ const createFollower = (userId, elem) => {
 };
 
 const deleteFollower = (followingId, elem) => {
-    fetch(`http://127.0.0.1:5000/api/following/${followingId}`, {
+    fetch(`/api/following/${followingId}`, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
@@ -174,7 +174,7 @@ const user2Html = user => {
 };
 
 const getSuggestions = () => {
-    fetch('http://127.0.0.1:5000/api/suggestions/')
+    fetch(`/api/suggestions/`)
         .then(response => response.json())
         .then(users => {
             console.log(users);
@@ -194,7 +194,7 @@ const story2Html = story => {
 
 // fetch data from your API endpoint:
 const displayStories = () => {
-    fetch('/api/stories')
+    fetch(`/api/stories`)
         .then(response => response.json())
         .then(stories => {
             const html = stories.map(story2Html).join('\n');
@@ -260,7 +260,7 @@ const post2Html = post => {
 }
 // document.getElementById('words').value
 const displayPost = () => {
-    fetch('http://127.0.0.1:5000/api/posts/?limit=10')
+    fetch(`/api/posts/?limit=10`)
         .then(response => response.json())
         .then(post => {
             const html = post.map(post2Html).join('\n');
@@ -345,7 +345,7 @@ const createComment = (postId, text) => {
         "text": text
     };
     
-    fetch("http://127.0.0.1:5000/api/comments", {
+    fetch(`/api/comments`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -364,7 +364,7 @@ const addBookmark = (postId, elem) => {
         "post_id": postId
     };
 
-    fetch("http://127.0.0.1:5000/api/bookmarks/", {
+    fetch(`/api/bookmarks/`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -382,7 +382,7 @@ const addBookmark = (postId, elem) => {
 }; 
 
 const removeBookmark = (bookmarkId, elem) => {
-    deleteURL = `http://127.0.0.1:5000/api/bookmarks/${bookmarkId}`
+    deleteURL = `/api/bookmarks/${bookmarkId}`
     fetch(deleteURL, {
         method: "DELETE"
     })
@@ -402,7 +402,7 @@ const createLikePost = elem => {
         "post_id": post_id
     };
     
-    fetch(`http://127.0.0.1:5000/api/posts/likes/`, {
+    fetch(`/api/posts/likes/`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -425,7 +425,7 @@ const createLikePost = elem => {
 }
 
 const getSingleLike = (postId) => {
-    fetch(`http://127.0.0.1:5000/api/posts/${postId}`, {
+    fetch(`/api/posts/${postId}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
@@ -443,7 +443,7 @@ const deleteLikePost = elem => {
     const like_id = elem.dataset.likepostId;
     console.log(like_id)
 
-    fetch(`http://127.0.0.1:5000/api/posts/likes/${like_id}`, {
+    fetch(`/api/posts/likes/${like_id}`, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
