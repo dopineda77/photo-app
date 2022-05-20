@@ -9,17 +9,37 @@ const displayProfile = () => {
     .then(data => {
         console.log(data);
         console.log(userInfo2html(data));
-        //document.getElementsByClassName('user-profile').innerHtml = userInfo2html(data);
-        document.getElementsByClassName('user-profile').innerHtml = `hello world`;
+        document.querySelector('.user-profile').innerHTML = userInfo2html(data);
+        //document.getElementsByClassName('user-profile').innerHtml = `hello world`;
         console.log(document.querySelector('aside header'));
     });
 };
+
+const getSinglePost = (url) => {
+    fetch(url, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(post => {
+        console.log(post);
+        const html = drawModal(post);
+        document.querySelector('.modal-bg').innerHTML = html;
+
+    });
+}
 
 const modalElement = document.querySelector('.modal-bg');
 
 const openModal = ev => {
     console.log('open!');
-    modalElement.innerHTML = drawModal();
+    const postId = ev.currentTarget.dataset.postId;
+    const urlToGet = 'http://127.0.0.1:5000/api/posts/' + postId;
+
+
+    getSinglePost(urlToGet);
     modalElement.classList.remove('hidden');
     modalElement.setAttribute('aria-hidden', 'false');
     document.querySelector('.close').focus();
@@ -29,6 +49,7 @@ const closeModal = ev => {
     console.log('close!');
     modalElement.classList.add('hidden');
     modalElement.setAttribute('aria-hidden', 'false');
+    document.querySelector('.modal').remoe
     //document.querySelector('.open').focus();
 };
 
@@ -44,20 +65,39 @@ document.addEventListener('focus', function(event) {
     }
 }, true);
 
-const drawModal = () => {
+//need to fetch a single post
+
+const drawModal = (post) => { //post, num comments
     return `<section class="modal">
     <button class="close" aria-label="Close the modal window" onclick="closeModal(event);">Close</button>
     <div class="modal-body">
         <div class="row">
-            <p>post username</p> 
-            <button class="like-comment">some button</button>
+            <p>${post.user.username}</p> 
         </div>
          <div class="row">
-            <img src="https://picsum.photos/600/430?id=576">
+            <img src="${post.image_url}">
         </div>
+        ${modalComments(post)}
     </div>
 </section>`
-}
+};
+
+const modalComments = post => {
+    result = ``;
+    for (let c of post.comments) {
+        result += `<div id="single-comment">
+                        <a id="comment-username">
+                            ${c.user.username}
+                        </a>
+                        <p id="comment-text">
+                            ${c.text}
+                        </p>
+                    </div>`;
+    }
+    return result;
+};
+
+
 
 const toggleFollow = ev => {
     console.log(ev);
@@ -164,36 +204,6 @@ const displayStories = () => {
 
 // populate the modal with the contents of each post 
 
-// // const modal2html = post => {
-//     return `<div class="modal-bg hidden" aria-hidden="true" role="dialog">
-//                 <section class="modal">
-//                     <button class="close" aria-label="Close the modal window" onclick="closeModal(event);">Close</button>
-//                     <div class="modal-body">
-//                         <div class="row">
-//                             <p>Some comment text</p>
-//                             <button class="like-comment">some button</button>
-//                         </div>
-//                          <div class="row">
-//                             <p>Some comment text</p>
-//                             <button class="like-comment">some button</button>
-//                         </div>
-//                         <div class="row">
-//                             <p>Some comment text</p>
-//                             <button class="like-comment">some button</button>
-//                         </div>
-//                         <div class="row">
-//                             <p>Some comment text</p>
-//                             <button class="like-comment">some button</button>
-//                         </div>
-//                         <div class="row">
-//                             <p>Some comment text</p>
-//                             <button class="like-comment">some button</button>
-//                         </div>
-//                     </div>
-//                 </section>
-//             </div>`;
-// // }
-
 const post2Html = post => {
     return `
     <div class="post">
@@ -215,7 +225,7 @@ const post2Html = post => {
         </div>
     </div>
     <div id="num-likes">
-        <p id="numbers">
+        <p id="numbers-${post.id}">
             ${showCorrectLikes(post.likes.length)}
         </p>
     </div>
@@ -237,9 +247,13 @@ const post2Html = post => {
     <div id="comment-section">
         <div id="left-section">
             <i class="far fa-2x fa-smile"></i>
-            <input type="text" id="words" placeholder="Add a comment..."></input>
+            <input type="text" id="searchable" placeholder="Add a comment..."></input>
         </div>
-        <button onclick="createComment(event);" id="post-button"> Post </button>
+        <button onclick="toggleComment(event);" 
+        id="post-button"
+        data-post-id="${post.id}"> 
+            Post 
+        </button>
     </div>
     </div>
     `;
@@ -286,7 +300,7 @@ const showCorrectComments = (post, numOfComments) => {
                 ${post.comments[0].text}
             </p>
         </div>
-        <button id="view-all" onclick="openModal(event)">
+        <button id="view-all" data-post-id="${post.id}" onclick="openModal(event)">
             View all ${numOfComments} comments
         </button>`;
     } else {
@@ -317,8 +331,9 @@ const toggleBookmark = ev => {
 
 const toggleComment = ev => {
     elem = ev.currentTarget;
-    // elem.dataset.text
-    createComment(elem.dataset.postId, document.getElementById('text').value);
+    // const searchTerm = "searchable" + elem.dataset.postId;
+    console.log(elem.dataset);
+    createComment(elem.dataset.postId, document.getElementById("searchable").value);
 };
 
 // previousElementSibling
@@ -396,11 +411,31 @@ const createLikePost = elem => {
         })
         .then(response => response.json())
         .then(data => {
+
+            const postToShowId = elem.dataset.postId;
+            getSingleLike(postToShowId);
+
+
+
             console.log(data);
             elem.setAttribute("aria-checked", 'true');
             elem.setAttribute("data-likepost-id", data.id);
             elem.innerHTML = `<i class="fas fa-2x fa-heart"></i>`
         });
+}
+
+const getSingleLike = (postId) => {
+    fetch(`http://127.0.0.1:5000/api/posts/${postId}`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        document.getElementById('numbers-' + postId).innerHTML = showCorrectLikes(data.likes.length);
+    });
 }
 
 const deleteLikePost = elem => {
@@ -416,6 +451,10 @@ const deleteLikePost = elem => {
     })
     .then(response => response.json())
     .then(data => {
+
+        const postToShowId = elem.dataset.postId;
+        getSingleLike(postToShowId);
+
         console.log(data);
         elem.setAttribute("aria-checked", 'false');
         elem.removeAttribute("data-likepost-id", data.id);
@@ -433,4 +472,3 @@ const initPage = () => {
 };
 
 initPage();
-displayProfile();

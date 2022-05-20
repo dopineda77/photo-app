@@ -302,16 +302,17 @@ main {
     border: solid 1px #dbdbdb;
     border-radius: 15px;
 }
-aside header {
+.user-profile {
     display: flex;
+    justify-content: space-around;
     align-items: center;
-    width: 25vw;
+    margin-top: 2vh;
+    font-size: 2em;
 }
-
-aside header .pic {
+.user-profile img {
     min-width: 60px;
     min-height: 60px;
-    border-radius: 33px;
+    border-radius: 50%;
     border-width: 0px;
     margin-right: 20px;
 }
@@ -350,6 +351,16 @@ aside header .pic {
     margin-left: 1vw;
     margin-right: 1vw;
 
+}
+
+#post-interaction button {
+    background-color: white;
+    border: none;
+}
+
+#view-all {
+    border: none;
+    background-color: white;
 }
 
 #post-interaction #save {
@@ -495,4 +506,12 @@ aside header .pic {
     padding: 10px;
     align-items: center;
     border-bottom: solid 1px #CCC;
+}
+
+aside header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2vh;
+    font-size: 2em;
 }
