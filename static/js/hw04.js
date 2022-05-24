@@ -1,10 +1,30 @@
+const getCookie = key => {
+    let name = key + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+};
+
 const userInfo2html = user => {
     return `<img src="${user.thumb_url}" alt="Current user's profile picture" width="100" height="100">
             <p id="user-name">${user.username}</p>`;
 };
 
 const displayProfile = () => {
-    fetch(`/api/profile/`)
+    fetch(`/api/profile/`, {
+        headers: {
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
+        }
+    })
     .then(response => response.json())
     .then(data => {
         console.log(data);
@@ -20,6 +40,7 @@ const getSinglePost = (url) => {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
         }
     })
     .then(response => response.json())
@@ -36,7 +57,7 @@ const modalElement = document.querySelector('.modal-bg');
 const openModal = ev => {
     console.log('open!');
     const postId = ev.currentTarget.dataset.postId;
-    const urlToGet = 'http://127.0.0.1:5000/api/posts/' + postId;
+    const urlToGet = '/api/posts/' + postId;
 
 
     getSinglePost(urlToGet);
@@ -119,10 +140,11 @@ const createFollower = (userId, elem) => {
         "user_id": userId
     };
     
-    fetch("http://127.0.0.1:5000/api/following/", {
+    fetch("/api/following/", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': getCookie('csrf_access_token')
             },
             body: JSON.stringify(postData)
         })
@@ -139,10 +161,11 @@ const createFollower = (userId, elem) => {
 };
 
 const deleteFollower = (followingId, elem) => {
-    fetch(`http://127.0.0.1:5000/api/following/${followingId}`, {
+    fetch(`/api/following/${followingId}`, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
         }
     })
     .then(response => response.json())
@@ -174,7 +197,11 @@ const user2Html = user => {
 };
 
 const getSuggestions = () => {
-    fetch('http://127.0.0.1:5000/api/suggestions/')
+    fetch('/api/suggestions/', {
+        headers: {
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
+        }
+    })
         .then(response => response.json())
         .then(users => {
             console.log(users);
@@ -194,7 +221,11 @@ const story2Html = story => {
 
 // fetch data from your API endpoint:
 const displayStories = () => {
-    fetch('/api/stories')
+    fetch('/api/stories', {
+        headers: {
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
+        }
+    })
         .then(response => response.json())
         .then(stories => {
             const html = stories.map(story2Html).join('\n');
@@ -247,7 +278,7 @@ const post2Html = post => {
     <div id="comment-section">
         <div id="left-section">
             <i class="far fa-2x fa-smile"></i>
-            <input type="text" id="searchable" placeholder="Add a comment..."></input>
+            <input type="text" id="searchable${post.id}" placeholder="Add a comment..."></input>
         </div>
         <button onclick="toggleComment(event);" 
         id="post-button"
@@ -260,7 +291,11 @@ const post2Html = post => {
 }
 // document.getElementById('words').value
 const displayPost = () => {
-    fetch('http://127.0.0.1:5000/api/posts/?limit=10')
+    fetch(`/api/posts/?limit=10`, {
+        headers: {
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
+        }
+    })
         .then(response => response.json())
         .then(post => {
             const html = post.map(post2Html).join('\n');
@@ -331,9 +366,9 @@ const toggleBookmark = ev => {
 
 const toggleComment = ev => {
     elem = ev.currentTarget;
-    // const searchTerm = "searchable" + elem.dataset.postId;
+    const searchTerm = "searchable" + elem.dataset.postId;
     console.log(elem.dataset);
-    createComment(elem.dataset.postId, document.getElementById("searchable").value);
+    createComment(elem.dataset.postId, document.getElementById(searchTerm).value);
 };
 
 // previousElementSibling
@@ -345,10 +380,11 @@ const createComment = (postId, text) => {
         "text": text
     };
     
-    fetch("http://127.0.0.1:5000/api/comments", {
+    fetch(`/api/comments`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': getCookie('csrf_access_token')
             },
             body: JSON.stringify(postData)
         })
@@ -364,10 +400,11 @@ const addBookmark = (postId, elem) => {
         "post_id": postId
     };
 
-    fetch("http://127.0.0.1:5000/api/bookmarks/", {
+    fetch(`/api/bookmarks/`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
         },
         body: JSON.stringify(postData)
     })
@@ -382,9 +419,12 @@ const addBookmark = (postId, elem) => {
 }; 
 
 const removeBookmark = (bookmarkId, elem) => {
-    deleteURL = `http://127.0.0.1:5000/api/bookmarks/${bookmarkId}`
+    deleteURL = `/api/bookmarks/${bookmarkId}`
     fetch(deleteURL, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
+        }
     })
     .then(response => response.json())
     .then(data => {
@@ -402,10 +442,11 @@ const createLikePost = elem => {
         "post_id": post_id
     };
     
-    fetch(`http://127.0.0.1:5000/api/posts/likes/`, {
+    fetch(`/api/posts/likes/`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': getCookie('csrf_access_token')
             },
             body: JSON.stringify(postData)
         })
@@ -425,10 +466,11 @@ const createLikePost = elem => {
 }
 
 const getSingleLike = (postId) => {
-    fetch(`http://127.0.0.1:5000/api/posts/${postId}`, {
+    fetch(`/api/posts/${postId}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
         }
     })
     .then(response => response.json())
@@ -443,10 +485,11 @@ const deleteLikePost = elem => {
     const like_id = elem.dataset.likepostId;
     console.log(like_id)
 
-    fetch(`http://127.0.0.1:5000/api/posts/likes/${like_id}`, {
+    fetch(`/api/posts/likes/${like_id}`, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': getCookie('csrf_access_token')
         }
     })
     .then(response => response.json())
